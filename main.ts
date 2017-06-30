@@ -50,6 +50,30 @@ let display = {
   }
 };
 
+class StatArray {
+  constructor(
+    public str: number,
+    public dex: number,
+    public con: number,
+    public int: number,
+    public wis: number,
+    public cha: number
+  ) { }
+}
+
+function statModifier(stat) {
+  return Math.floor((stat - 10) / 2);
+}
+
+class Creature {
+  constructor(
+    public name: string,
+    public hp: number,
+    public ac: number,
+    public stats: StatArray
+  ) { }
+}
+
 display.print(() => {
   display.getLine((input) => {
     display.print(() => {})(`You entered ${input}`);
