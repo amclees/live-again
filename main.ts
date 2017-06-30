@@ -74,6 +74,14 @@ class Creature {
   ) { }
 }
 
+let Dice = {
+  dx: (sides: number) => (amount: number) => () => {
+    return amount + Math.round((Math.random() * (sides - 1) * amount))
+  },
+  d20: () => { 0 }
+};
+Dice.d20 = Dice.dx(20)(1);
+
 display.print(() => {
   display.getLine((input) => {
     display.print(() => {})(`You entered ${input}`);
