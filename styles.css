@@ -4,6 +4,10 @@ body {
   background-color: #000000;
 }
 
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
 #console {
   overflow-y: auto;
   width: 100%;
