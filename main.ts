@@ -15,6 +15,8 @@ let display = {
     let textContent = lineContainer.children[0];
     consoleContainer.appendChild(lineContainer);
 
+    window.scrollTo(0, document.body.scrollHeight);
+
     let toPrint = message[0] + message.slice(1);
     let interval = setInterval(() => {
       if (toPrint.length === 0) {
@@ -31,13 +33,15 @@ let display = {
     let lineContainer = display.getLineContainer();
     let inputSpan = lineContainer.children[0] as HTMLElement;
 
-    inputSpan.setAttribute('contenteditable', "true");
+    inputSpan.id = 'active-input';
+    inputSpan.setAttribute('contenteditable', 'true');
     inputSpan.addEventListener('input', (inputEvent) => {
       setTimeout(() => {
         let currentText = inputSpan.innerText;
         if (currentText[currentText.length - 1] === '\n') {
           inputSpan.innerText = currentText.slice(0, currentText.length - 1);
           inputSpan.setAttribute('contenteditable', "false");
+          inputSpan.removeAttribute('id');
           callback(inputSpan.innerText);
         }
       }, 10);
@@ -83,7 +87,25 @@ let Dice = {
 Dice.d20 = Dice.dx(20)(1);
 
 display.print(() => {
-  display.getLine((input) => {
-    display.print(() => {})(`You entered ${input}`);
-  });
+  let loop = (input) => {
+    display.print(() => {
+      display.getLine(loop);
+    })(`You entered ${input}`);
+  }
+  display.getLine(loop);
 })('Entering world...');
+
+function focusOnInput() {
+  let inputSpan = document.getElementById('active-input');
+  if (inputSpan) {
+    inputSpan['focus']();
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  focusOnInput();
+});
+
+document.addEventListener('click', () => {
+  focusOnInput();
+});

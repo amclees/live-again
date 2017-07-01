@@ -1,14 +1,13 @@
 body {
   margin: 0;
   font-family: Consolas, monospace;
+  background-color: #000000;
 }
 
 #console {
-  position: fixed;
   overflow-y: auto;
   width: 100%;
-  height: 100%;
-  background-color: #000000;
+  height: 80%;
   color: #CACACA;
   padding: 30px;
 }
